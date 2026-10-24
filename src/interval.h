@@ -1,5 +1,6 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
+//To get rid of everytime writing tmin to tmax
 
 #include "utility_pch.h"
 

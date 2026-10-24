@@ -16,6 +16,8 @@ its example -->
 3.Compute a color for the closest intersection point.
 */
 
+#include "camera.h"
+
 #include "utility_pch.h"
 #include "hittable.h"
 #include "hittable_list.h"
@@ -53,10 +55,10 @@ double hit_sphere(const point3& center, double radius, const ray& r) {
         return 0.5*color(N.x()+1, N.y()+1, N.z()+1);
     }*/
 
-    color ray_color(const ray& r, const hittable& world) //Updated 
+    /*color ray_color(const ray& r, const hittable& world) //Updated 
     {
     hit_record rec;
-    if (world.hit(r, 0, infinity, rec)) {
+    if (world.hit(r, interval(0, infinity), rec)) {
         return 0.5 * (rec.normal + color(1,1,1));
     }
 
@@ -66,7 +68,7 @@ double hit_sphere(const point3& center, double radius, const ray& r) {
     auto a = 0.5*(unit_direction.y() + 1.0);
     return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
 }
-
+*/
 int main()
 {
   //IMAGE----------------------------------------------------------------------------------------------------
@@ -74,11 +76,11 @@ int main()
    //int image_height = 256;  we now replace these fixed size to our apect ratio and pixel size we want!
    //int image_width = 256;
 
-   auto aspect_ratio = 16.0/9.0;
-   int image_width = 400;
+   //auto aspect_ratio = 16.0/9.0;
+   //int image_width = 400;
 // Calculate the image height, and ensure that it's at least 1.
-    int image_height = int(image_width / aspect_ratio);
-    image_height = (image_height < 1) ? 1 : image_height;
+    //int image_height = int(image_width / aspect_ratio);
+    //image_height = (image_height < 1) ? 1 : image_height;
 
     // WORLD-------------------------------------------------------------------------------------------------
 
@@ -87,8 +89,15 @@ int main()
     world.add(make_shared<sphere>(point3(0,0,-1), 0.5));
     world.add(make_shared<sphere>(point3(0,-100.5,-1), 100));
 
-    //CAMERA--------------------------------------------------------------------------------------------------
+    camera cam;
 
+    cam.aspect_ratio = 16.0 / 9.0;
+    cam.image_width  = 400;
+
+    cam.render(world);
+
+    //CAMERA--------------------------------------------------------------------------------------------------
+/*------------------------(Moved to Its Own Class)------------------------------
     auto focal_length = 1.0;
 //the viewport helps to brigde the gap between our 3D scene and the 2D coordinates pixel grid.
     auto viewport_height = 2.0;
@@ -107,7 +116,7 @@ int main()
     // Calculate the location of the upper left pixel.
     auto viewport_upper_left = camera_center - vec3(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
     auto pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
-
+*/
 
   //RENDERER-------------------------------------------------------------------------------------------------
 
@@ -131,7 +140,7 @@ int main()
 */
 
 //with vec3 and color classes we made...
- std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+ /*std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
     for (int j = 0; j < image_height; j++) 
     {
@@ -147,7 +156,7 @@ int main()
      }
     }
      std::clog << "\rDone.            \n";
-
+*/
   /*
   The pixels are written in rows in left to right and top to bottom.
   we have also added a loading.
