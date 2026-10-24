@@ -1,7 +1,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include<iostream>
+#include "utility_pch.h"
 #include "vec3.h"
 
 //Type Alising
